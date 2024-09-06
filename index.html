@@ -26,6 +26,7 @@
       max-width: 100vw;
       padding: 10px;
       align-items: center;
+      justify-content: center;
     }
     .card-evolution:hover,
     .active {
@@ -43,7 +44,7 @@
   </style>
   <body>
     <section id="slider-evo" class="card-slide-evo">
-      <article class="card-evolution">
+      <article class="card-evolution active">
         <img src="./imgs/01-the-college-dropout.jpg" alt="" />
       </article>
       <article class="card-evolution">
@@ -87,59 +88,27 @@
       );
     }
 
-    function removeActive(cards) {
+    function setHoverCard(cards, hoverCard) {
       cards.forEach((card) => {
         card.classList.remove("active");
       });
+      hoverCard.classList.add("active");
     }
 
-    function setNextActive(cards, activeIndex) {
-      if (activeIndex === cards.length - 1) {
-        cards[0].classList.add("active");
-      } else {
-        cards[activeIndex + 1].classList.add("active");
-      }
-      setTimeout(animateSlide, 2500);
+    function setNextCard(cards, cardActive) {
+      const nextCard = cardActive.nextElementSibling;
+      cardActive.classList.remove("active");
+
+      nextCard !== null
+        ? nextCard.classList.add("active")
+        : cards[0].classList.add("active");
     }
 
     function hoverCards(cards) {
       cards.forEach((card, i) => {
-        card.addEventListener("mouseenter", (el) => {
-          removeActive(cards);
-          card.classList.add("active");
-        });
-        card.addEventListener("mouseleave", (el) => {
-          card.classList.remove("active");
-          const next = card.nextElementSibling;
-          next !== null
-            ? next.classList.add("active")
-            : cards[0].classList.add("active");
-        });
+        card.addEventListener("mouseenter", () => setHoverCard(cards, card));
+        card.addEventListener("mouseleave", () => setNextCard(cards, card));
       });
-    }
-
-    function animateSlide(cards) {
-      // console.log("xd");
-      // let activeIndex;
-      // cards.forEach((card, i) => {
-      //   card.addEventListener("mouseenter", (el) => {
-      //     removeActive(cards);
-      //     activeIndex = i;
-      //   });
-      //   card.addEventListener("mouseleave", (el) => {
-      //     activeIndex = Object.values(cards).indexOf(card);
-      //     setNextActive(cards, activeIndex);
-      //   });
-      //   if (card.classList.contains("active")) activeIndex = i;
-      // });
-      // let hover = false;
-      // cards.forEach((card) => {
-      //   if (card.matches(":hover")) hover = true;
-      // });
-      // if (!hover) {
-      //   removeActive(cards);
-      //   setNextActive(cards, activeIndex);
-      // }
     }
 
     (() => {
@@ -151,12 +120,15 @@
         const sliderVisible = isInViewport(slider);
 
         if (sliderVisible) {
-          // animateSlide(cards);
-          let lastActive;
+          let isHover = false;
+          let cardActive;
+
           cards.forEach((card, i) => {
-            if (card.classList.contains("active")) lastActive = i;
+            if (card.matches(":hover")) isHover = true;
+            if (card.classList.contains("active")) cardActive = card;
           });
-          // console.log(lastActive);
+
+          if (!isHover) setNextCard(cards, cardActive);
         }
       }, 2500);
     })();
