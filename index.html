@@ -6,6 +6,14 @@
     <title>ye</title>
   </head>
   <style>
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      color: light-dark(#0e0f18, #efefec);
+      background-color: light-dark(#efedea, #0e0f18);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -23,6 +31,7 @@
     .active {
       img {
         width: calc(((100vw - 20px) / 12) * 3);
+        transition: ease 0.5s;
       }
     }
     .card-evolution:not(:hover):not(.active) {
@@ -33,8 +42,8 @@
     }
   </style>
   <body>
-    <section class="card-slide-evo">
-      <article class="card-evolution active">
+    <section id="slider-evo" class="card-slide-evo">
+      <article class="card-evolution">
         <img src="./imgs/01-the-college-dropout.jpg" alt="" />
       </article>
       <article class="card-evolution">
@@ -68,25 +77,88 @@
   </body>
 
   <script>
-    function animateSlide() {
-      const cards = document.querySelectorAll(".card-evolution");
-      let activeIndex;
+    function isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top + rect.height >= 0 &&
+        rect.left + rect.width >= 0 &&
+        rect.bottom - rect.height <= document.documentElement.clientHeight &&
+        rect.right - rect.width <= document.documentElement.clientWidth
+      );
+    }
 
-      cards.forEach((card, i) => {
-        if (card.classList.contains("active")) activeIndex = i;
+    function removeActive(cards) {
+      cards.forEach((card) => {
+        card.classList.remove("active");
       });
+    }
 
-      cards[activeIndex].classList.remove("active");
-
+    function setNextActive(cards, activeIndex) {
       if (activeIndex === cards.length - 1) {
         cards[0].classList.add("active");
       } else {
         cards[activeIndex + 1].classList.add("active");
       }
+      setTimeout(animateSlide, 2500);
+    }
+
+    function hoverCards(cards) {
+      cards.forEach((card, i) => {
+        card.addEventListener("mouseenter", (el) => {
+          removeActive(cards);
+          card.classList.add("active");
+        });
+        card.addEventListener("mouseleave", (el) => {
+          card.classList.remove("active");
+          const next = card.nextElementSibling;
+          next !== null
+            ? next.classList.add("active")
+            : cards[0].classList.add("active");
+        });
+      });
+    }
+
+    function animateSlide(cards) {
+      // console.log("xd");
+      // let activeIndex;
+      // cards.forEach((card, i) => {
+      //   card.addEventListener("mouseenter", (el) => {
+      //     removeActive(cards);
+      //     activeIndex = i;
+      //   });
+      //   card.addEventListener("mouseleave", (el) => {
+      //     activeIndex = Object.values(cards).indexOf(card);
+      //     setNextActive(cards, activeIndex);
+      //   });
+      //   if (card.classList.contains("active")) activeIndex = i;
+      // });
+      // let hover = false;
+      // cards.forEach((card) => {
+      //   if (card.matches(":hover")) hover = true;
+      // });
+      // if (!hover) {
+      //   removeActive(cards);
+      //   setNextActive(cards, activeIndex);
+      // }
     }
 
     (() => {
-      setInterval(animateSlide, 2500);
+      const cards = document.querySelectorAll(".card-evolution");
+      const slider = document.getElementById("slider-evo");
+      hoverCards(cards);
+
+      setInterval(() => {
+        const sliderVisible = isInViewport(slider);
+
+        if (sliderVisible) {
+          // animateSlide(cards);
+          let lastActive;
+          cards.forEach((card, i) => {
+            if (card.classList.contains("active")) lastActive = i;
+          });
+          // console.log(lastActive);
+        }
+      }, 2500);
     })();
   </script>
 </html>
