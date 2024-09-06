@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ye</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .card-evolution img {
+      min-height: 350px;
+    }
+    .card-slide-evo {
+      display: flex;
+      max-width: 100vw;
+      padding: 10px;
+      align-items: center;
+    }
+    .card-evolution:hover,
+    .active {
+      img {
+        width: calc(((100vw - 20px) / 12) * 3);
+      }
+    }
+    .card-evolution:not(:hover):not(.active) {
+      img {
+        width: calc((100vw - 20px) / 12);
+        transition: ease 0.5s;
+      }
+    }
+  </style>
+  <body>
+    <section class="card-slide-evo">
+      <article class="card-evolution active">
+        <img src="./imgs/01-the-college-dropout.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/02-late-registration.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/03-graduation.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/04-808s-heartbreak.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/05-my-beautiful-dark-twisted-fantasy.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/06-yeezus.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/07-the-life-of-pablo.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/08-ye.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/09-jesus-is-king.jpg" alt="" />
+      </article>
+      <article class="card-evolution">
+        <img src="./imgs/10-donda.jpg" alt="" />
+      </article>
+    </section>
+  </body>
+
+  <script>
+    function animateSlide() {
+      const cards = document.querySelectorAll(".card-evolution");
+      let activeIndex;
+
+      cards.forEach((card, i) => {
+        if (card.classList.contains("active")) activeIndex = i;
+      });
+
+      cards[activeIndex].classList.remove("active");
+
+      if (activeIndex === cards.length - 1) {
+        cards[0].classList.add("active");
+      } else {
+        cards[activeIndex + 1].classList.add("active");
+      }
+    }
+
+    (() => {
+      setInterval(animateSlide, 2500);
+    })();
+  </script>
+</html>
