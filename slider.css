@@ -8,8 +8,16 @@
 }
 
 .card-evolution {
-  transition: height, width cubic-bezier(0.95, 0.15, 1, -0.13) 500ms,
-    cubic-bezier(0, 0.34, 0.55, 0.95) 500ms;
+  position: relative;
+  overflow: hidden;
+  transition: height linear 500ms, width linear 500ms,
+    transform cubic-bezier(0, 0.34, 0.55, 0.95) 500ms;
+
+  img {
+    position: absolute;
+    bottom: 0;
+    transition: height ease 300ms, filter ease 500ms;
+  }
 }
 .active ~ .card-evolution {
   transform: skew(0deg, -20deg) !important;
@@ -23,7 +31,11 @@
   margin: 5px;
 
   img {
-    display: none;
+    width: 50%;
+    height: 0;
+    left: 25%;
+    right: 25%;
+    filter: blur(10px);
   }
 }
 .card-evolution:hover,
@@ -33,7 +45,9 @@
   justify-content: center;
   aspect-ratio: 503/1052;
   img {
-    display: flex;
+    height: 100%;
+    width: auto;
+    filter: blur(0);
   }
 }
 
