@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ye</title>
+
+    <link rel="stylesheet" href="./slider.css" />
   </head>
   <style>
     :root {
@@ -17,29 +19,6 @@
     * {
       margin: 0;
       padding: 0;
-    }
-    .card-evolution img {
-      min-height: 350px;
-    }
-    .card-slide-evo {
-      display: flex;
-      max-width: 100vw;
-      padding: 10px;
-      align-items: center;
-      justify-content: center;
-    }
-    .card-evolution:hover,
-    .active {
-      img {
-        width: calc(((100vw - 20px) / 12) * 3);
-        transition: ease 0.5s;
-      }
-    }
-    .card-evolution:not(:hover):not(.active) {
-      img {
-        width: calc((100vw - 20px) / 12);
-        transition: ease 0.5s;
-      }
     }
   </style>
   <body>
@@ -122,12 +101,10 @@
         if (sliderVisible) {
           let isHover = false;
           let cardActive;
-
           cards.forEach((card, i) => {
             if (card.matches(":hover")) isHover = true;
             if (card.classList.contains("active")) cardActive = card;
           });
-
           if (!isHover) setNextCard(cards, cardActive);
         }
       }, 2500);
