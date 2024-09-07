@@ -57,6 +57,10 @@
   </body>
 
   <script>
+    const cards = document.querySelectorAll(".card-evolution");
+    const slider = document.getElementById("slider-evo");
+    let nIntervId;
+
     function isInViewport(el) {
       const rect = el.getBoundingClientRect();
       return (
@@ -71,6 +75,7 @@
       cards.forEach((card) => {
         card.classList.remove("active");
       });
+
       hoverCard.classList.add("active");
     }
 
@@ -85,29 +90,34 @@
 
     function hoverCards(cards) {
       cards.forEach((card, i) => {
-        card.addEventListener("mouseenter", () => setHoverCard(cards, card));
-        card.addEventListener("mouseleave", () => setNextCard(cards, card));
+        card.addEventListener("mouseenter", () => {
+          clearInterval(nIntervId);
+          nIntervId = null;
+          setHoverCard(cards, card);
+        });
+        card.addEventListener("mouseleave", () => {
+          setNextCard(cards, card);
+          nIntervId = setInterval(runSlider, 2500);
+        });
       });
     }
 
+    function runSlider() {
+      const sliderVisible = isInViewport(slider);
+      if (sliderVisible) {
+        let cardActive;
+
+        cards.forEach((card, i) => {
+          if (card.classList.contains("active")) cardActive = card;
+        });
+
+        setNextCard(cards, cardActive);
+      }
+    }
+
     (() => {
-      const cards = document.querySelectorAll(".card-evolution");
-      const slider = document.getElementById("slider-evo");
       hoverCards(cards);
-
-      setInterval(() => {
-        const sliderVisible = isInViewport(slider);
-
-        if (sliderVisible) {
-          let isHover = false;
-          let cardActive;
-          cards.forEach((card, i) => {
-            if (card.matches(":hover")) isHover = true;
-            if (card.classList.contains("active")) cardActive = card;
-          });
-          if (!isHover) setNextCard(cards, cardActive);
-        }
-      }, 2500);
+      if (!nIntervId) nIntervId = setInterval(runSlider, 2500);
     })();
   </script>
 </html>
