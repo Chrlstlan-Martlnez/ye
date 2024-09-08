@@ -8,8 +8,8 @@
 }
 
 .card-evolution {
-  position: relative;
-  overflow: hidden;
+  overflow-y: clip;
+  border-radius: 5px;
   transition: height linear 500ms, width linear 500ms,
     transform cubic-bezier(0, 0.34, 0.55, 0.95) 500ms;
 
@@ -19,6 +19,7 @@
     transition: height ease 300ms, filter ease 500ms;
   }
 }
+
 .active ~ .card-evolution {
   transform: skew(0deg, -20deg) !important;
 }
@@ -28,7 +29,7 @@
 
 .card-evolution:not(:hover):not(.active) {
   width: calc(((100vw - 20px) / 10));
-  margin: 5px;
+  margin: 0.5em;
 
   img {
     width: 50%;
@@ -38,12 +39,35 @@
     filter: blur(10px);
   }
 }
+/* .card-evolution::before {
+  content: "";
+  top: 10px;
+  left: -10px;
+  bottom: 0;
+  right: 0;
+  background-color: currentColor;
+  position: absolute;
+} */
+/* .card-evolution::after {
+  content: "";
+  top: 0;
+  left: -0.5em;
+  bottom: 0;
+  right: 0;
+  width: calc(100% + 1em);
+  background-color: black;
+  opacity: 0.5;
+  position: absolute;
+} */
+
 .card-evolution:hover,
 .active {
   width: calc(((100vw - 20px) / 10) * 3);
   display: flex;
   justify-content: center;
   aspect-ratio: 503/1052;
+  z-index: 100;
+  filter: drop-shadow(0 0 10px currentcolor);
   img {
     height: 100%;
     width: auto;
@@ -53,31 +77,41 @@
 
 .card-evolution:nth-child(1) {
   background-color: #3d060b;
+  color: #e8a21e;
 }
 .card-evolution:nth-child(2) {
   background-color: #5a2c0b;
+  color: #c5aa00;
 }
 .card-evolution:nth-child(3) {
   background-color: #6f3081;
+  color: #d31e60;
 }
 .card-evolution:nth-child(4) {
   background-color: #d1dad9;
+  color: #7a8284;
 }
 .card-evolution:nth-child(5) {
   background-color: #ef2a46;
+  color: #f9c526;
 }
 .card-evolution:nth-child(6) {
   background-color: #0d152a;
+  color: #fb0000;
 }
 .card-evolution:nth-child(7) {
   background-color: #f98d4f;
+  color: #28221f;
 }
 .card-evolution:nth-child(8) {
   background-color: #61768a;
+  color: #01f830;
 }
 .card-evolution:nth-child(9) {
   background-color: #0000fe;
+  color: #e1df5a;
 }
 .card-evolution:nth-child(10) {
   background-color: #020202;
+  color: #c6c6c6;
 }
