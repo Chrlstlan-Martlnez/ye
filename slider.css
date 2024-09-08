@@ -8,16 +8,35 @@
 }
 
 .card-evolution {
-  overflow-y: clip;
-  border-radius: 5px;
+  position: relative;
   transition: height linear 500ms, width linear 500ms,
     transform cubic-bezier(0, 0.34, 0.55, 0.95) 500ms;
 
-  img {
-    position: absolute;
-    bottom: 0;
-    transition: height ease 300ms, filter ease 500ms;
+  .card-evo-container {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    img {
+      position: absolute;
+      bottom: 0;
+      transition: height ease 300ms, filter ease 500ms;
+    }
   }
+}
+.card-evolution::before {
+  content: "";
+  filter: blur(5px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+
+  background-color: currentColor;
 }
 
 .active ~ .card-evolution {
@@ -31,14 +50,41 @@
   width: calc(((100vw - 20px) / 10));
   margin: 0.5em;
 
-  img {
-    width: 50%;
-    height: 0;
-    left: 25%;
-    right: 25%;
-    filter: blur(10px);
+  .card-evo-container {
+    img {
+      width: 50%;
+      height: 0;
+      left: 25%;
+      right: 25%;
+      bottom: 5%;
+      filter: blur(10px);
+    }
   }
 }
+
+.card-evo-container::before {
+  content: "";
+  top: 0;
+  left: -0.5em;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  width: calc(100% + 1em);
+}
+.card-evo-container::after {
+  content: "";
+  background-color: black;
+  top: 0px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.95;
+  border-radius: 5px;
+}
+
 /* .card-evolution::before {
   content: "";
   top: 10px;
@@ -67,51 +113,100 @@
   justify-content: center;
   aspect-ratio: 503/1052;
   z-index: 100;
-  filter: drop-shadow(0 0 10px currentcolor);
-  img {
-    height: 100%;
-    width: auto;
-    filter: blur(0);
+
+  .card-evo-container {
+    filter: drop-shadow(0 0 10px currentcolor);
+    img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      filter: blur(0);
+    }
+  }
+}
+.card-evolution:hover,
+.active {
+  .card-evo-container::before {
+    content: "";
+    background-color: unset;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+  .card-evo-container::after {
+    content: "";
+    background-color: black;
+    top: 0px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    border-radius: 5px;
   }
 }
 
 .card-evolution:nth-child(1) {
-  background-color: #3d060b;
   color: #e8a21e;
+  .card-evo-container {
+    background-color: #3d060b;
+  }
 }
 .card-evolution:nth-child(2) {
-  background-color: #5a2c0b;
   color: #c5aa00;
+  .card-evo-container {
+    background-color: #5a2c0b;
+  }
 }
 .card-evolution:nth-child(3) {
-  background-color: #6f3081;
   color: #d31e60;
+  .card-evo-container {
+    background-color: #6f3081;
+  }
 }
 .card-evolution:nth-child(4) {
-  background-color: #d1dad9;
   color: #7a8284;
+  .card-evo-container {
+    background-color: #d1dad9;
+  }
 }
 .card-evolution:nth-child(5) {
-  background-color: #ef2a46;
   color: #f9c526;
+  .card-evo-container {
+    background-color: #ef2a46;
+  }
 }
 .card-evolution:nth-child(6) {
-  background-color: #0d152a;
   color: #fb0000;
+  .card-evo-container {
+    background-color: #0d152a;
+  }
 }
 .card-evolution:nth-child(7) {
-  background-color: #f98d4f;
   color: #28221f;
+  .card-evo-container {
+    background-color: #f98d4f;
+  }
 }
 .card-evolution:nth-child(8) {
-  background-color: #61768a;
   color: #01f830;
+  .card-evo-container {
+    background-color: #61768a;
+  }
 }
 .card-evolution:nth-child(9) {
-  background-color: #0000fe;
   color: #e1df5a;
+  .card-evo-container {
+    background-color: #0000fe;
+  }
 }
 .card-evolution:nth-child(10) {
-  background-color: #020202;
   color: #c6c6c6;
+  .card-evo-container {
+    background-color: #020202;
+  }
 }
