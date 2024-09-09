@@ -108,7 +108,7 @@
         : cards[0].classList.add("active");
     }
 
-    function hoverCards(cards) {
+    function hoverCardsEvents(cards) {
       cards.forEach((card, i) => {
         card.addEventListener("mouseenter", () => {
           clearInterval(nIntervId);
@@ -136,7 +136,7 @@
     }
 
     (() => {
-      hoverCards(cards);
+      hoverCardsEvents(cards);
       if (!nIntervId) nIntervId = setInterval(runSlider, 2500);
     })();
   </script>
